@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network Training</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <style>
+        /* Centering the main content */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        #container {
+            text-align: center;
+        }
+        #lossDisplay {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        #lossPlot {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Neural Network Training</h1>
+        <button onclick="startTraining()">Start Training</button>
+        <div id="lossDisplay">Epoch Loss will display here.</div>
+        <img id="lossPlot" src="" alt="Loss Plot"/>
+    </div>
+
+    <script>
+        const socket = io.connect('http://localhost:5000');
+
+        // Listen for epoch loss updates from the backend
+        socket.on('epoch_loss', data => {
+            document.getElementById('lossDisplay').innerHTML = 
+                `Epoch: ${data.epoch}, Loss: ${data.loss.toFixed(4)}`;
+        });
+
+        // Start training by calling the /train endpoint
+        function startTraining() {
+            fetch('/train', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('lossPlot').src = data.image_path;
+                document.getElementById('lossPlot').style.display = 'block';
+            });
+        }
+    </script>
+</body>
+</html>
+
