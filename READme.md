@@ -15,26 +15,22 @@ This project demonstrates a simple neural network built from scratch using Pytho
 - **Loss Plot Display**: After training is completed, a plot of loss over time is generated and displayed on the frontend.
 - **Basic Neural Network**: Built from scratch without external deep learning libraries, using only NumPy.
 
-## Setup
-
-### Prerequisites
-
-- Python 3.x
-- Flask
-- Flask-SocketIO
-- NumPy
-- Matplotlib
+## Setup 
 
 ### Installation
 
 1. Clone the repository:
    ```bash
    git clone https://github.com/sadiaghias/SNN_complete.git
-   cd your-repo-name
+   cd SNN_complete
 
+2. Creating and activating virtual environment.
+    python3 -m venv venv
+    source venv/bin/activate  # For mac
+    venv/Scripts/activate   # For windows
 
-2. Install the required packages:
-pip install Flask Flask-SocketIO numpy matplotlib
+3. Install the required packages:
+pip install -r requirements.txt
 
 
 ## Start the Flask app:
