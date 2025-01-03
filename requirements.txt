@@ -1,5 +1,12 @@
-Python 3.x
+
 Flask
 Flask-SocketIO
 NumPy
 Matplotlib
+eventlet  # or gevent, to support Flask-SocketIO's WebSocket functionality
+python-dateutil  # Required by Matplotlib
+pillow  # Required by Matplotlib if saving plots as images
+kiwisolver  # Required by Matplotlib for layout management
+cycler  # Required by Matplotlib for cycling through plot styles
+pyparsing  # Required by Matplotlib for parsing expressions
+flask-cors  # Added for handling CORS issues between frontend and backend

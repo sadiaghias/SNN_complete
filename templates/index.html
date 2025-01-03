@@ -6,7 +6,6 @@
     <title>Neural Network Training</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <style>
-        /* Centering the main content */
         body, html {
             height: 100%;
             margin: 0;
@@ -25,7 +24,7 @@
         #lossPlot {
             margin-top: 20px;
             max-width: 100%;
-            height: auto;
+            height: auto;  
             display: none;
         }
     </style>
@@ -39,12 +38,19 @@
     </div>
 
     <script>
-        const socket = io.connect('http://localhost:5000');
+        // Change the socket connection URL to the correct one (backend IP and port)
+        const socket = io('http://localhost:5000');  // Correct backend IP and port
 
         // Listen for epoch loss updates from the backend
         socket.on('epoch_loss', data => {
             document.getElementById('lossDisplay').innerHTML = 
                 `Epoch: ${data.epoch}, Loss: ${data.loss.toFixed(4)}`;
+        });
+
+        // Error handling
+        socket.on("connect_error", () => {
+            console.log("Connection failed.");
+            document.getElementById('lossDisplay').innerHTML = "Connection to the server failed.";
         });
 
         // Start training by calling the /train endpoint
@@ -54,11 +60,13 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('lossPlot').src = data.image_path;
+                document.getElementById('lossPlot').src = `${data.image_path}?t=${new Date().getTime()}`;
                 document.getElementById('lossPlot').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
         }
     </script>
 </body>
 </html>
-
