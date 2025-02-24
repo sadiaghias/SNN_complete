@@ -40,7 +40,7 @@
     <script>
         // Change the socket connection URL to the correct one (backend IP and port)
         const socket = io('http://localhost:5000');  // Correct backend IP and port
-
+        //const socket = io();
         // Listen for epoch loss updates from the backend
         socket.on('epoch_loss', data => {
             document.getElementById('lossDisplay').innerHTML = 

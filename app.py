@@ -4,21 +4,23 @@ eventlet.monkey_patch()  # The eventlet.monkey_patch() function is used
 
 from flask import Flask, render_template, jsonify
 from flask_socketio import SocketIO
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from Neural_Network import train_neural_network
 import numpy as np
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost"}})
+CORS(app)
 
 # Initialize SocketIO with eventlet
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet")
+#cors_allowed_origins="*",
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/train', methods=['POST'])
+@cross_origin()#Fixed CORS issue for Socket.IO
 def train():
     X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
     Y = np.array([[0], [1], [1], [0]])
